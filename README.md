@@ -147,7 +147,7 @@ name=yolo26n_olive_val
 
 
 
-## val
+## validation
 
 ```shell
 #执行预测
