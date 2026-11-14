@@ -30,15 +30,25 @@ python -m pip install -e . --no-deps
 
 ## Dataset Download
 
-The data can be downloaded at Baidu Drive with the code of 6666. The data is organized as:
+The manually labeled olive benchmark dataset is available at https://doi.org/10.5281/zenodo.24200116
 
 ```
-AerialTrees.rar
-├── Gaofeng
-│   ├── plot_1.ply
-│   ├── plot_2.ply
+olive_data
+├── test
+│   └── study_area.ply
+├── train
+│   ├── tile_r0000_c0004.txt
+│   ├── tile_r0000_c0006.txt
+│   ├── tile_r0000_c0007.txt
+│   ├── tile_r0000_c0008.txt
+│   ├── tile_r0000_c0009.txt
 │   └── ...
-└── Mulan
+└── val
+    ├── validation_1.txt
+    ├── validation_2.txt
+    ├── validation_3.txt
+    ├── validation_4.txt
+    ├── validation_5.txt
     └── ...
 ```
 
