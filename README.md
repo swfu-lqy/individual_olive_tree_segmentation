@@ -30,8 +30,7 @@ python -m pip install -e . --no-deps
 
 ## Dataset Download
 
-The manually labeled olive benchmark dataset is available at [https://doi.org/10.5281/zenodo.24200116
-](https://pan.baidu.com/s/1fu8xU1WGjcsZY-QK6auMwA?pwd=0102)
+The manually labeled olive benchmark dataset is available at https://pan.baidu.com/s/1fu8xU1WGjcsZY-QK6auMwA?pwd=0102.
 ```
 best.pt
 best_acc_model.pth
