@@ -18,9 +18,9 @@ conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit
 pip install cycler==0.12.1 einops==0.8.1 h5py==3.11.0 pyyaml==5.4.1 scikit-learn==0.24.2 scipy==1.10.1 tqdm==4.68.4 matplotlib==3.3.2
 pip install "cloth-simulation-filter<1.1.7" -i https://pypi.tuna.tsinghua.edu.cn/simple
 git clone https://github.com/swfu-lqy/individual_olive_tree_segmentation.git
+cd individual_olive_tree_segmentation
 pip install pointnet2_ops_lib/.
 # yolo
-#pip install ultralytics==8.4.78
 cd ./ultralytics
 python -m pip install -e . --no-deps
 
