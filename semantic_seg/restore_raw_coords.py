@@ -4,7 +4,10 @@ import numpy as np
 
 
 def load_txt(path):
-    data = np.loadtxt(path)
+    try:
+        data = np.loadtxt(path)
+    except ValueError:
+        data = np.loadtxt(path, delimiter=',').astype(np.float32)
     if data.ndim == 1:
         data = data.reshape(1, -1)
     return data

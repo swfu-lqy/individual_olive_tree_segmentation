@@ -15,7 +15,7 @@ conda activate olive_seg
 # torch
 conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit=11.3 -c pytorch -c conda-forge
 # pointMLP
-pip install cycler==0.12.1 einops==0.8.1 h5py==3.11.0 pyyaml==5.4.1 scikit-learn==0.24.2 scipy==1.10.1 tqdm==4.68.4 matplotlib==3.3.2
+pip install cycler==0.12.1 einops==0.8.1 h5py==3.11.0 pyyaml==5.4.1 scikit-learn==0.24.2 scipy==1.10.1 tqdm==4.68.4 matplotlib==3.3.2 polars==0.20.31
 pip install "cloth-simulation-filter<1.1.7" -i https://pypi.tuna.tsinghua.edu.cn/simple
 git clone https://github.com/swfu-lqy/individual_olive_tree_segmentation.git
 cd individual_olive_tree_segmentation
@@ -141,7 +141,7 @@ optimizer=AdamW \
 lr0=0.001 \
 weight_decay=0.0005 \
 patience=80 \
-project=/workspace/instance_seg/yolo_runs_olive \
+project="$PWD"/yolo_runs_olive \
 name=yolo26n_olive_train
 
 #验证测试指标(可选)
@@ -151,7 +151,7 @@ data=./olive_data_yolo_format/olive_4ch.yaml \
 imgsz=640 \
 batch=16 \
 split=val \
-project=/workspace/instance_seg/yolo_runs_olive \
+project="$PWD"/yolo_runs_olive \
 name=yolo26n_olive_val
 
 
@@ -175,11 +175,11 @@ python main_olive.py \
 --stride 2.0 \
 --test_batch_size 4 \
 --inference True \
---inference_input_dir ./../olive_data/test \
+--inference_input_dir ./../olive_data/val \
 --inference_output_dir ./inference/olive_data_pointMLP_predictions
 # 2.转换到原始坐标
 python restore_raw_coords.py  \
---src-dir ./../olive_data/test \
+--src-dir ./../olive_data/val \
 --pred-dir ./inference/olive_data_pointMLP_predictions \
 --out-dir ./../instance_seg/olive_data_pointMLP_predictions \
 --overwrite
@@ -221,7 +221,7 @@ save_txt=True \
 save_conf=True \
 save=False \
 plots=False \
-project=/workspace/instance_seg/yolo_runs_olive \
+project="$PWD"/yolo_runs_olive \
 name=yolo26n_olive_test
 
 # 可视化yolo框的预测结果（可选）
@@ -253,7 +253,7 @@ python map_yolo_predictions_to_pointcloud.py \
 python visualize_mapped_boxes.py \
 --box-dir ./yolo_boxes_to_coordinate \
 --dataset-dir ./olive_data_yolo_format \
---feature-dir ./olive_data_4ch_features \
+--feature-dir ./olive_data_4ch_features/test \
 --split test \
 --output-dir ./yolo_maped_points_boxes_visual \
 --channels CHM,G_CHM,LBP_CHM \
@@ -274,6 +274,11 @@ python branch_to_tree_aggregate.py \
 --outside-cluster-distance 7 \
 --cylinder-radius 0.25 \
 --cylinder-z-mode mid
+
+# 7.metrics evaluation
+cd ..
+python metrics_evaluate.py
+
 
 ```
 

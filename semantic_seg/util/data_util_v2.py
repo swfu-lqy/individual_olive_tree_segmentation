@@ -48,7 +48,10 @@ def load_olive_scene_file(path):
     if path.lower().endswith('.ply'):
         data = load_olive_ply(path)
     else:
-        data = np.loadtxt(path).astype(np.float32)
+        try:
+            data = np.loadtxt(path).astype(np.float32)
+        except ValueError:
+            data = np.loadtxt(path, delimiter=',').astype(np.float32)
         if data.shape[1] == 6:
             data = np.concatenate([data, np.zeros((data.shape[0], 2), dtype=np.float32)], axis=1)
         elif data.shape[1] == 7:
@@ -245,7 +248,10 @@ class OliveBlockDataset(Dataset):
         self.semantic_labels_list = []
         num_point_all = []
         for path in self.datapath:
-            data = np.loadtxt(path).astype(np.float32)
+            try:
+                data = np.loadtxt(path).astype(np.float32)
+            except ValueError:
+                data = np.loadtxt(path, delimiter=',').astype(np.float32)
             self.scene_points_list.append(data[:, 0:6])
             self.semantic_labels_list.append(data[:, 6].astype(np.int32))
             num_point_all.append(data.shape[0])
